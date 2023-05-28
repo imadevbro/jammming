@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  background-image: radial-gradient(#282c34, black);
+  height: 100vh;
+  width: 100vw;
 }
 
 .App-logo {
@@ -35,4 +38,48 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.nav-bar {
+  background-color: black;
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.logo {
+  height: 60px;
+  width: auto;
+}
+
+.song-list {
+  background-color: #3c424e;
+  border-radius: 1rem;
+  margin: 2rem;
+  min-width: 300px;
+}
+
+.song-result {
+  padding: 1rem;
+  display: flex;
+}
+
+.album-art {
+  height: 100px;
+  width: auto;
+  padding: 1rem;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+footer {
+  background-color: black;
+  color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 0.5rem;
 }
