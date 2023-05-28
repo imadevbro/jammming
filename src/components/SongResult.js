@@ -4,7 +4,7 @@ function SongResult(props) {
     console.log(props);
     return (
         <a className="song-result">
-            <img src={this.props.mySong.src} alt="album art" className="album-art"/>
+            <img src={props.mySong.src} alt="album art" className="album-art"/>
             <div>
                 <p>{props.mySong.artist}</p>
                 <p>{props.mySong.song}</p>
