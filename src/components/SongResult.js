@@ -1,16 +1,17 @@
 import React from 'react';
-import albumArt from '../assets/album-art.jpg';
 
-function SongResult() {
+function SongResult(props) {
+    console.log(props);
     return (
-        <div className="song-result">
-            <img src={albumArt} alt="album art" className="album-art"/>
+        <a className="song-result">
+            <img src={this.props.mySong.src} alt="album art" className="album-art"/>
             <div>
-                <p>Artist name</p>
-                <p>Song name</p>
+                <p>{props.mySong.artist}</p>
+                <p>{props.mySong.song}</p>
             </div>
-        </div>
-    )
+            <p className="plus-btn">+</p>
+        </a>
+    );
 }
 
 export default SongResult;
