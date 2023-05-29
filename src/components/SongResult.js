@@ -11,7 +11,7 @@ function SongResult(props) {
                 <p>{props.artist}</p>
                 <p>{props.song}</p>
             </div>
-            <p className="plus-btn">+</p>
+            <p className="plus-btn">Add to Playlist</p>
         </a>
     );
 }

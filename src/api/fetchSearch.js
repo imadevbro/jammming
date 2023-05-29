@@ -7,7 +7,7 @@ export async function fetchSearch(searchValue) {
             Authorization: 'Bearer ' + accessToken
             }
         });
-        console.log(await response.json());
+        return await response.json();
     } catch(error) {
         console.log(error);
     }

@@ -12,13 +12,7 @@ runFlow();
 
 function App() {
 
-  const searchData = [
-    {src: "https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg", artist: "Kanye West", song: "The Good Life" },
-    {src: "https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg", artist: "Bob Saget", song: "Dropout" },
-    {src: "https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg", artist: "Tim Dragnuts", song: "Through the Wire" },
-    {src: "https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg", artist: "Yo Dawg", song: "Diggity" }
-  ];
-
+  const [songOptions, setSongOptions] = useState([]);
   const [playlistData, setPlaylistData] = useState([]);
   const [searchInput, setSearchInput] = useState("");
 
@@ -41,9 +35,12 @@ function App() {
     console.log('Search: ', searchInput);
   }, [searchInput]);
 
-  function handleClickSearch(searchValue) {
-    console.log(searchValue);
-    fetchSearch(searchValue);
+  async function handleClickSearch(searchValue) {
+    const searchResponse = await fetchSearch(searchValue);
+    const formattedResponse = searchResponse.tracks.items.map(item =>  {
+      return {src: item.album.images[0].url, artist: item.artists[0].name, song: item.name}
+    });
+    setSongOptions(formattedResponse);
   }
 
   return (
@@ -54,7 +51,7 @@ function App() {
       <main>
         <SearchBar handleChange={handleChangeSearch} handleClick={handleClickSearch} input={searchInput}/>
         <div className="main-container">
-          <SearchResults data={searchData} onClick={handleClickSong}/>
+          <SearchResults data={songOptions} onClick={handleClickSong}/>
           <Playlist data={playlistData} onClick={handleRemoveSong}/>
         </div>
       </main>

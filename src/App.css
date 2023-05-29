@@ -62,6 +62,7 @@
   border-radius: 1rem;
   margin: 2rem;
   min-width: 500px;
+  min-height: 500px;
 }
 
 .song-result {
