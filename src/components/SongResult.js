@@ -1,13 +1,15 @@
 import React from 'react';
 
 function SongResult(props) {
-    console.log(props);
+    function handleClick() {
+        props.onClick(props);
+    }
     return (
-        <a className="song-result">
-            <img src={props.mySong.src} alt="album art" className="album-art"/>
+        <a className="song-result" onClick={handleClick}>
+            <img src={props.src} alt="album art" className="album-art"/>
             <div>
-                <p>{props.mySong.artist}</p>
-                <p>{props.mySong.song}</p>
+                <p>{props.artist}</p>
+                <p>{props.song}</p>
             </div>
             <p className="plus-btn">+</p>
         </a>
