@@ -1,10 +1,14 @@
 import './App.css';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SearchResults from './components/SearchResults';
 import NavBar from './components/NavBar';
 import Playlist from './components/Playlist';
 import SearchBar from './components/SearchBar';
+import {runFlow} from './api/Authenticate';
+import {fetchSearch} from './api/fetchSearch'
+
+runFlow();
 
 function App() {
 
@@ -16,6 +20,7 @@ function App() {
   ];
 
   const [playlistData, setPlaylistData] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
 
   function handleClickSong(song) {
     setPlaylistData([...playlistData, {src: song.src, artist: song.artist, song: song.song }]);
@@ -28,13 +33,26 @@ function App() {
     setPlaylistData([...newPlaylist]);
   }
 
+  function handleChangeSearch(event) {
+    setSearchInput(event.target.value);
+  }
+
+  useEffect(() => {
+    console.log('Search: ', searchInput);
+  }, [searchInput]);
+
+  function handleClickSearch(searchValue) {
+    console.log(searchValue);
+    fetchSearch(searchValue);
+  }
+
   return (
     <div className="App">
       <header>
         <NavBar />
       </header>
       <main>
-        <SearchBar />
+        <SearchBar handleChange={handleChangeSearch} handleClick={handleClickSearch} input={searchInput}/>
         <div className="main-container">
           <SearchResults data={searchData} onClick={handleClickSong}/>
           <Playlist data={playlistData} onClick={handleRemoveSong}/>

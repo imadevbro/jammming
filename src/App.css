@@ -94,6 +94,10 @@ footer {
   padding: 0.5rem 0;
 }
 
-input {
+input, button {
   color: black;
+}
+
+.save-btn {
+  margin: 2rem auto;
 }
