@@ -1,5 +1,4 @@
 const clientId = "f054f91e9c6a4debba3ec992ccda0f57"; // Replace with your client ID
-const clientSecret = "51bc7baf7b2e4277910d739dd1be2c01";
 const parameters = new URLSearchParams(window.location.search);
 const code = parameters.get("code");
 
@@ -9,7 +8,7 @@ export async function runFlow() {
     } else {
         await getAccessToken(clientId, code);
         const profile = await fetchProfile();
-        populateUI(profile);
+        return profile;
     }
 }
 

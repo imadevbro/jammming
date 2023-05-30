@@ -1,8 +1,11 @@
 import React from 'react';
 
-function SaveToSpotify() {
+function SaveToSpotify(props) {
+    function handleClick() {
+        props.onSavePlaylist(props.playlistName);
+    }
     return(
-        <button className="save-btn">Save to Spotify</button>
+        <button className="save-btn" onClick={handleClick}>Save to Spotify</button>
     );
 }
 

@@ -5,19 +5,22 @@ import SearchResults from './components/SearchResults';
 import NavBar from './components/NavBar';
 import Playlist from './components/Playlist';
 import SearchBar from './components/SearchBar';
-import {runFlow} from './api/Authenticate';
-import {fetchSearch} from './api/fetchSearch'
+import { runFlow } from './api/Authenticate';
+import { fetchSearch } from './api/fetchSearch'
+import { createPlaylist } from './api/createPlaylist';
 
-runFlow();
+const profile = await runFlow();
 
 function App() {
 
   const [songOptions, setSongOptions] = useState([]);
   const [playlistData, setPlaylistData] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [playlistName, setPlaylistName] = useState("My Playlist");
 
   function handleClickSong(song) {
-    setPlaylistData([...playlistData, {src: song.src, artist: song.artist, song: song.song }]);
+    console.log(song);
+    setPlaylistData([...playlistData, {src: song.src, artist: song.artist, song: song.song, uri: song.uri }]);
   }
 
   function handleRemoveSong(song) {
@@ -31,16 +34,27 @@ function App() {
     setSearchInput(event.target.value);
   }
 
-  useEffect(() => {
-    console.log('Search: ', searchInput);
-  }, [searchInput]);
-
   async function handleClickSearch(searchValue) {
     const searchResponse = await fetchSearch(searchValue);
     const formattedResponse = searchResponse.tracks.items.map(item =>  {
-      return {src: item.album.images[0].url, artist: item.artists[0].name, song: item.name}
+      return {src: item.album.images[0].url, artist: item.artists[0].name, song: item.name, uri: item.uri}
     });
     setSongOptions(formattedResponse);
+  }
+
+  function handleChangePlaylistName(event) {
+    setPlaylistName(event.target.value);
+  }
+  
+  useEffect(() => {
+    console.log('Playlist Name: ', playlistName);
+  }, [playlistName]);
+
+  function handleSavePlaylist(playlistName) {
+    const playlistUris = playlistData.map(item => item.uri);
+    console.log(playlistUris)
+    createPlaylist(playlistName, profile.id, playlistUris);
+    setPlaylistData([]);
   }
 
   return (
@@ -52,7 +66,7 @@ function App() {
         <SearchBar handleChange={handleChangeSearch} handleClick={handleClickSearch} input={searchInput}/>
         <div className="main-container">
           <SearchResults data={songOptions} onClick={handleClickSong}/>
-          <Playlist data={playlistData} onClick={handleRemoveSong}/>
+          <Playlist data={playlistData} onClickSong={handleRemoveSong} onChangeName={handleChangePlaylistName} input={playlistName} onSavePlaylist={handleSavePlaylist}/>
         </div>
       </main>
       <footer>
